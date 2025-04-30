@@ -1,0 +1,17 @@
+:root {
+    --font-black: #333;
+    --white: #f7f6f2
+}
+
+body {
+    background-image: url(../bilder/Hintergrund_Textur.jpg);
+    background-size: cover;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: repeat;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
