@@ -1,18 +1,12 @@
-
-
 :root {
     --font-black: #333;
     --white: #f7f6f2
 }
 
 body {
-    background-size: cover;
-    background-attachment: scroll;
-    background-position: center;
-    background-repeat: repeat;
-    width: 100%;
+
     margin: 0;
-    padding: 0;
+    padding: 20px;
     overflow-x: hidden;
 }
 
@@ -23,16 +17,62 @@ h1 {
     font-size: 32px;
 }
 
-h2{
+h2 {
     font-family: "Aldrich";
     font-size: 20px;
+
 }
+
+
+
 
 p {
     font-family: "Aldrich";
     font-size: 15px;
 }
 
+.infobox {
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    font-family: "Aldrich";
+    font-size: 20px;
+    border: 2px solid #210101;
+    border-radius: 50px;
+    padding: 10px 20px;
+    color: #210101;
+    text-align: center;
+    margin: 0;
+    width: fit-content;
+
+
+}
+
+#buttons { 
+    display: flex;
+    gap: 10px;
+}
+
 .box {
-    color:
+    background: #f0f0f0;
+    border-radius: 25px;
+    padding-top: 150px;
+    padding-bottom: 150px;
+    margin: 20px;
+    position: relative;
+
+}
+
+#luftbox {
+    width: 353px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+#lichtbox {
+    width: 353px;
+    height: 100px;
+    flex-shrink: 0;
 }
