@@ -37,32 +37,41 @@ $input = json_decode($inputJSON, true); // Dekodieren der JSON-Daten in ein Arra
 ###################################### Prüfen, ob die JSON-Daten erfolgreich dekodiert wurden
 ### folgender Block nicht zwingend notwendig, nur für Troubleshooting: Die rohen JSON-Daten in die Tabelle receiveddata einfügen
 
-// if (json_last_error() === JSON_ERROR_NONE && !empty($input)) {
-//     $sql = "INSERT INTO receiveddata (msg) VALUES (?)";
-//     $stmt = $pdo->prepare($sql);
-//     $stmt->execute([$inputJSON]);
-// }
+if (json_last_error() === JSON_ERROR_NONE && !empty($input)) {
+    $sql = "INSERT INTO receiveddata (msg) VALUES (?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$inputJSON]);
+}
 
-// echo "</br></br> Zeig die letzten 5 empfangenen HTTP Requests";
-// $sql = "SELECT * FROM receiveddata ORDER BY id DESC LIMIT 5";
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute();
-// $receiveddata = $stmt->fetchAll();
+echo "</br></br> Zeig die letzten 5 empfangenen HTTP Requests";
+$sql = "SELECT * FROM receiveddata ORDER BY id DESC LIMIT 5";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$receiveddata = $stmt->fetchAll();
 
-// echo "<ul>";
-// foreach ($receiveddata as $data) {
-//     echo "<li>" . $data['msg'] . "</li>";
-// }
-// echo "</ul>";
+echo "<ul>";
+foreach ($receiveddata as $data) {
+    echo "<li>" . $data['msg'] . "</li>";
+}
+echo "</ul>";
 
 
 ###################################### receiving a post request from a HTML form, later from ESP32 C6
 
-$wert = $input["wert"];
-# insert new user into db
-$sql = "INSERT INTO sensordata (wert) VALUES (?)";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$wert]);
-// $stmt->execute(["42"]);
+if ($input && json_last_error() === JSON_ERROR_NONE) {
+    $Temp = $input["Temp"];
+    $Hum = $input["Hum"];
+    $Ratio = $input["Ratio"];
+    $AirQuality = $input["AirQuality"];
+
+    if ($Temp !== null && $Hum !== null && $Ratio !== null && $AirQuality !== null) {
+        $sql = "INSERT INTO sensordata (temperature, humidity, ratio, air_quality) VALUES (?, ?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$Temp, $Hum, $Ratio, $AirQuality]);
+        echo "</br> Daten erfolgreich in die Datenbank eingefügt";
+    } else {
+        error_log("Missing one or more required fields in input JSON.");
+    }
+}
 
 ?>
