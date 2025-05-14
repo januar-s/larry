@@ -1,13 +1,28 @@
 :root {
-    --font-black: #333;
-    --white: #f7f6f2
+
+    --black: #333232;
+    --background: #F6F6F6;
+    --background-dark: #E8E8E8;
+    --yellow: #FDFF98;
+    --orange: #FFCE79;
+    --light-blue: #A9E5F0;
+    --dark-blue: #A4C2DF;
 }
 
 body {
-
+    background: var(--background);
     margin: 0;
     padding: 20px;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+h1, h2, p {
+    margin: 0;
+    padding: 0;
+    color: var(--black);
 }
 
 h1 {
@@ -15,20 +30,23 @@ h1 {
     font-weight: 400;
     font-style: normal;
     font-size: 32px;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
 }
 
 h2 {
     font-family: "Aldrich";
     font-size: 20px;
-
 }
-
-
 
 
 p {
     font-family: "Aldrich";
     font-size: 15px;
+}
+
+#logo {
+    margin-bottom: 5vh;
 }
 
 .infobox {
@@ -39,10 +57,10 @@ p {
     gap: 1rem;
     font-family: "Aldrich";
     font-size: 20px;
-    border: 2px solid #210101;
+    border: 2px solid var(--black);
     border-radius: 50px;
     padding: 10px 20px;
-    color: #210101;
+    color: var(--black);
     text-align: center;
     margin: 0;
     width: fit-content;
@@ -55,24 +73,65 @@ p {
     gap: 10px;
 }
 
+.card {
+    margin-bottom: 5vh;
+}
+
 .box {
-    background: #f0f0f0;
+    background: var(--background-dark);
     border-radius: 25px;
-    padding-top: 150px;
-    padding-bottom: 150px;
-    margin: 20px;
+    margin: 0;
+    padding: 10px;
+    width: calc(100vw - 60px);
     position: relative;
+    height: auto;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.graph {
+    margin: 0;
+    margin-bottom: 10px;
+    padding-top: 20px;
+    width: 100%;
+    position: relative;
+    height: auto;
+    flex-shrink: 0;
 
 }
 
-#luftbox {
-    width: 353px;
-    height: 100px;
-    flex-shrink: 0;
+img {
+    max-width: 100%;
+    height: auto;
+
 }
 
-#lichtbox {
-    width: 353px;
-    height: 100px;
-    flex-shrink: 0;
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.plus {
+    width: 25px;
+    height: auto;
+    align-self: flex-end;
+    transition: transform 0.3s ease;
+}
+
+.plus.rotated {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.dropdown-content.show {
+    max-height: 200px; /* Adjust depending on your content's height */
 }

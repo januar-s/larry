@@ -18,33 +18,50 @@
         <h1>Larry</h1>
     </div>
 
-    <div id="buttons"> 
-    <div class="infobox" id="boxbüro">
-        <h2>Box Büro</h2>
-
-    </div>
-
-    <div class="infobox" id="addbox">
-        <h2>add Box</h2>
-
-    </div>
-
-</div>
-    <div id="luft">
-        <h1>Luft</h1>
-        <div class="box" id="luftbox">
-
-            <div width: 353px; height: 500px; flex-shrink: 0;> </div>
-
-
+    <div id="buttons">
+        <div class="infobox" id="boxbüro">
+            <h2>Box Büro</h2>
         </div>
 
+        <div class="infobox" id="addbox">
+            <h2>add Box</h2>
+        </div>
     </div>
 
+    <div id="luft" class="card">
+        <h1>Luft</h1>
+        <div class="box" id="luftbox">
+            <div class="graph" id="luftgraph">
+                <img src="icons/line-graph.webp" alt="graph of the air quality" id="luftgraphimg">
+            </div>
+            <div class="dropdown">
+                <div class="dropdown-content" id="luftdropdown">
+                    <a>Luftfeuchtigkeit</a>
+                    <a>Temperatur</a>
+                    <a>Luftdruck</a>
+                </div>
+                <img src="icons/plus.svg" alt="plus" class="plus" id="luftplus">
 
-    <div id="licht">
+            </div>
+
+        </div>
+    </div>
+
+    <div id="licht" class="card">
         <h1>Licht</h1>
-        <div class="box" id="lichtbox"></div>
+        <div class="box" id="lichtbox">
+            <div class="graph" id="lichtgraph">
+                <img src="icons/line-graph.webp" alt="graph of the lightusage" id="lichtgraphimg">
+            </div>
+            <div class="dropdown">
+                <div class="dropdown-content" id="lichtdropdown">
+                    <a>Helligkeit</a>
+                    <a>UV-Strahlung</a>
+                    <a>IR-Strahlung</a>
+                </div>
+                <img src="icons/plus.svg" alt="plus" class="plus" id="lichtplus">
+
+        </div>
     </div>
 
 
