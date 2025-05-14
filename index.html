@@ -33,6 +33,7 @@
         <div class="box" id="luftbox">
             <div class="graph" id="luftgraph">
                 <div style="width: 400px;"><canvas id="linegraph"></canvas></div>
+            
             </div>
             <div class="dropdown">
                 <div class="dropdown-content" id="luftdropdown">
@@ -46,12 +47,14 @@
 
         </div>
     </div>
-
+  
+            
     <div id="licht" class="card">
         <h1>Licht</h1>
         <div class="box" id="lichtbox">
             <div class="graph" id="lichtgraph">
-                <img src="icons/line-graph.webp" alt="graph of the lightusage" id="lichtgraphimg">
+                <div style="width: 400px;"><canvas id="bargraph"></canvas></div>
+            
             </div>
             <div class="dropdown">
                 <div class="dropdown-content" id="lichtdropdown">
@@ -71,8 +74,18 @@
 
 
     </footer>
-    <script type="module" src="js/linegraph.js"></script>
-    <script src="js/scripts.js"></script>
+    <!-- Load Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Line chart -->
+<script src="js/linegraph.js"></script>
+
+<!--  Add bar chart -->
+<script src="js/bargraph.js"></script>
+
+<!-- Any other scripts -->
+<script src="js/scripts.js"></script>
+
 </body>
 
 </html>

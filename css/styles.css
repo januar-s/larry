@@ -135,3 +135,18 @@ img {
 .dropdown-content.show {
     max-height: 200px; /* Adjust depending on your content's height */
 }
+
+
+#linegraph {
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+  }
+  
+
+  #bargraph {
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+  }  
+  
