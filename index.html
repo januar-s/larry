@@ -84,6 +84,65 @@
 <!-- Any other scripts -->
 <script src="js/scripts.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("php/unload_gas.php")
+    .then((response) => response.json())
+    .then((data) => {
+      const entries = data.averages; // Assuming your JSON has a field `averages`
+
+      const labels = entries.map(entry => entry.time_block.slice(11, 16));  // x-axis
+      const ratios = entries.map(entry => entry.avg_ratio);  // y-axis
+
+      const ctx = document.getElementById("linegraph").getContext("2d");
+
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Air Quality Ratio",
+            data: ratios,
+            backgroundColor: "rgba(249, 225, 225, 0.5)",
+            borderColor: "blue",
+            borderWidth: 2,
+            tension: 0.3,
+            pointRadius: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              ticks: {
+                maxRotation: 90,
+                minRotation: 45,
+                autoSkip: true
+              },
+              title: {
+                display: true,
+                text: 'Zeit'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Luftqualitätsverhältnis'
+              },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Fehler beim Laden der Daten:", error);
+    });
+});
+</script>
+
+
 </body>
 
 </html>
