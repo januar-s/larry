@@ -16,7 +16,7 @@ try {
     $grouped = [];
     foreach ($data as $entry) {
         $date = substr($entry['timestamp'], 0, 10);
-        if ($entry['light'] < 2000) {
+        if ($entry['light'] < 2200) {
             $grouped[$date][] = $entry;
         }
     }
