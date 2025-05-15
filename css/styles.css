@@ -121,11 +121,13 @@ img {
     height: auto;
     align-self: flex-end;
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .plus.rotated {
-    transform: rotate(180deg);
+    transform: rotate(180deg); /* or keep as-is for consistency */
 }
+
 
 .dropdown-content {
     display: flex;
