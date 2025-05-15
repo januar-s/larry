@@ -4,9 +4,10 @@ require 'config.php';
 try {
     $pdo = new PDO($dsn, $db_user, $db_pass, $options);
 
-    // Fetch the last 7 days of entries where light < 2000
+    // Fetch the last 7 days of entries where light < 2200
     $sql = "SELECT * FROM lichtbewegung 
             WHERE timestamp >= NOW() - INTERVAL 7 DAY 
+            AND light < 2200 
             ORDER BY timestamp ASC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -16,39 +17,66 @@ try {
     $grouped = [];
     foreach ($data as $entry) {
         $date = substr($entry['timestamp'], 0, 10);
-        if ($entry['light'] < 2200) {
-            $grouped[$date][] = $entry;
-        }
+        $grouped[$date][] = $entry;
     }
 
-    $minSequenceLength = 90; // ~15 minutes at ~10s intervals
+    $minSequenceLength = 90; // 15 minutes (~10s interval)
+    $noMovementThreshold = 60; // 10 minutes without movement (~60 entries)
     $results = [];
 
     foreach ($grouped as $date => $entries) {
-        $count = 0;
-        $sequenceLength = 0;
+        $sequences = [];
+        $currentSequence = [];
 
         for ($i = 0; $i < count($entries); $i++) {
             $current = strtotime($entries[$i]['timestamp']);
             $prev = $i > 0 ? strtotime($entries[$i - 1]['timestamp']) : null;
 
-            // Check if this entry is ~10s after the previous one
             if ($i === 0 || ($current - $prev <= 15)) {
-                $sequenceLength++;
+                $currentSequence[] = $entries[$i];
             } else {
-                if ($sequenceLength >= $minSequenceLength) {
-                    $count++;
+                if (count($currentSequence) >= $minSequenceLength) {
+                    $sequences[] = $currentSequence;
                 }
-                $sequenceLength = 1;
+                $currentSequence = [$entries[$i]];
             }
         }
 
-        // Final check at end
-        if ($sequenceLength >= $minSequenceLength) {
-            $count++;
+        // Final check for the last sequence
+        if (count($currentSequence) >= $minSequenceLength) {
+            $sequences[] = $currentSequence;
         }
 
-        $results[$date] = $count;
+        $withMovement = 0;
+        $withoutMovement = 0;
+
+        foreach ($sequences as $sequence) {
+            $noMovementCount = 0;
+            $hasLongNoMovement = false;
+
+            for ($i = 0; $i < count($sequence); $i++) {
+                if ($sequence[$i]['bewegung'] == 0) {
+                    $noMovementCount++;
+                    if ($noMovementCount >= $noMovementThreshold) {
+                        $hasLongNoMovement = true;
+                        break;
+                    }
+                } else {
+                    $noMovementCount = 0;
+                }
+            }
+
+            if ($hasLongNoMovement) {
+                $withoutMovement++;
+            } else {
+                $withMovement++;
+            }
+        }
+
+        $results[$date] = [
+            'with_movement' => $withMovement,
+            'without_movement' => $withoutMovement
+        ];
     }
 
     header('Content-Type: application/json');
@@ -57,4 +85,3 @@ try {
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
-?>
