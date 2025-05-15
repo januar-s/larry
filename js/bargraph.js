@@ -1,33 +1,53 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const data = [
-      { year: 2010, count: 10 },
-      { year: 2011, count: 20 },
-      { year: 2012, count: 15 },
-      { year: 2013, count: 25 },
-      { year: 2014, count: 22 },
-      { year: 2015, count: 30 },
-      { year: 2016, count: 28 },
-    ];
-  
-    new Chart(
-      document.getElementById('bargraph'),
-      {
-        type: 'bar',
-        data: {
-          labels: data.map(row => row.year),
-          datasets: [{
-            label: 'Licht > 15min an',
-            data: data.map(row => row.count),
-            backgroundColor: '#f9e1e1',
-            borderColor: '#210101',
-            borderWidth: 2,
-          }]
+document.addEventListener("DOMContentLoaded", function () {
+  const ctx = document.getElementById("bargraph").getContext("2d");
+
+  const days = ["mo", "di", "mi", "do", "fr", "sa", "so"];
+  const lightOn = [4, 3, 2, 5, 3, 1, 0]; // Anzahl wie oft Licht >15min an war
+  const lightNoMotion = [2, 1, 1, 3, 1, 0, 0]; // Anzahl wie oft Licht >10min ohne Bewegung
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: days,
+      datasets: [
+        {
+          label: "Licht > 15min an",
+          data: lightOn,
+          backgroundColor: "#FFCE79",
+          borderWidth: 1,
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
+        {
+          label: "Licht >10min ohne Bewegung",
+          data: lightNoMotion,
+          backgroundColor: "#FFFF99",
+          borderWidth: 1,
+        }
+      ]
+    },
+    options: {
+      indexAxis: "y", // horizontale Balken
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: "Anzahl Ereignisse"
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Wochentag"
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          position: "bottom"
         }
       }
-    );
+    }
   });
-  
+});

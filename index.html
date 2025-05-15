@@ -100,6 +100,71 @@
     <!-- Any other scripts -->
     <script src="js/scripts.js"></script>
 
+    <canvas id="bargraph" width="400" height="300"></canvas>
+
+<script>
+  let barChart;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById("bargraph").getContext("2d");
+
+    barChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["mo", "di", "mi", "do", "fr", "sa", "so"], // days of the week
+        datasets: [
+          {
+            label: "Licht an (h)",
+            data: [3.5, 2.8, 3.2, 4.1, 2.6, 1.9, 2.3], // example data
+            backgroundColor: "rgba(255, 206, 86, 0.8)"
+          },
+          {
+            label: "Licht an ohne Bewegung (h)",
+            data: [1.8, 1.2, 0.9, 2.0, 1.1, 0.7, 0.5], // example data
+            backgroundColor: "rgba(255, 255, 153, 0.8)"
+          }
+        ]
+      },
+      options: {
+        indexAxis: "y", // horizontal bars
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Stunden"
+            },
+            beginAtZero: true
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Wochentag"
+            }
+          }
+        }
+      }
+    });
+
+  //Optional: Fetch real data from your PHP endpoint
+  
+    fetch("php/unload_light_data.php")
+      .then((response) => response.json())
+      .then((data) => {
+        const days = data.days; // ["mo", "di", "mi", ...]
+        const lightOn = data.light_on; // [3.5, 2.8, 3.2, ...]
+        const lightNoMotion = data.light_on_no_motion; // [1.8, 1.2, 0.9, ...]
+
+        barChart.data.labels = days;
+        barChart.data.datasets[0].data = lightOn;
+        barChart.data.datasets[1].data = lightNoMotion;
+        barChart.update();
+      });
+    
+  });
+</script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
