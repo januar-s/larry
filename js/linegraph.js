@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         borderWidth: 2,
         tension: 0.3,
         pointRadius: 3
+        
       }]
     },
     options: {
