@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
         borderWidth: 2,
         tension: 0.3,
         pointRadius: 3
-        
       }]
     },
     options: {
@@ -27,13 +26,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Fetch new data and update chart
-  fetch("php/unload_gas.php")
-    .then((response) => response.json())
-    .then((data) => {
-      const entries = data.averages;
-      myChart.data.labels = entries.map(e => e.time_block.slice(11, 16));
-      myChart.data.datasets[0].data = entries.map(e => e.avg_ratio);
-      myChart.update();
-    });
+  // 👇 Define update function
+  function updateData() {
+    fetch("php/unload_gas.php")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update chart
+        const entries = data.averages;
+        myChart.data.labels = entries.map(e => e.time_block.slice(11, 16));
+        myChart.data.datasets[0].data = entries.map(e => e.avg_ratio);
+        myChart.update();
+
+        // Update latest readings
+        const latest = data.latest;
+        if (latest) {
+          const airQualityEl = document.getElementById("AirQualityText");
+          airQualityEl.textContent = "Air Quality: " + latest.air_quality;
+          document.getElementById("TemperatureText").textContent = "Temperature: " + latest.temperature + " °C";
+          document.getElementById("HumidityText").textContent = "Humidity: " + latest.humidity + " %";
+        }
+      })
+      .catch((error) => {
+        console.error("Fehler beim Laden der Daten:", error);
+      });
+  }
+
+  // 🔁 Initial call
+  updateData();
+
+  // 🔁 Call every 60 seconds (60000 ms)
+  setInterval(updateData, 60000);
 });
