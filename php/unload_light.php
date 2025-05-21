@@ -20,7 +20,7 @@ try {
         $grouped[$date][] = $entry;
     }
 
-    $minSequenceLength = 90; // 15 minutes (~10s interval)
+    $minSequenceLength = 60; // 10 minutes (~10s interval)
     $noMovementThreshold = 60; // 10 minutes without movement (~60 entries)
     $results = [];
 
