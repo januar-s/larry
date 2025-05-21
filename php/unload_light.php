@@ -50,28 +50,47 @@ try {
         $withMovement = 0;
         $withoutMovement = 0;
 
-        foreach ($sequences as $sequence) {
-            $noMovementCount = 0;
-            $hasLongNoMovement = false;
+foreach ($sequences as $sequence) {
+    $len = count($sequence);
+    $smoothed = [];
 
-            for ($i = 0; $i < count($sequence); $i++) {
-                if ($sequence[$i]['bewegung'] == 0) {
-                    $noMovementCount++;
-                    if ($noMovementCount >= $noMovementThreshold) {
-                        $hasLongNoMovement = true;
-                        break;
-                    }
-                } else {
-                    $noMovementCount = 0;
-                }
-            }
+    // Step 1: Smooth the movement data to ignore isolated spikes
+    for ($i = 0; $i < $len; $i++) {
+        $prev = $i > 0 ? $sequence[$i - 1]['bewegung'] : 0;
+        $curr = $sequence[$i]['bewegung'];
+        $next = $i < $len - 1 ? $sequence[$i + 1]['bewegung'] : 0;
 
-            if ($hasLongNoMovement) {
-                $withoutMovement++;
-            } else {
-                $withMovement++;
-            }
+        // If current is 1 but surrounded by 0s, treat it as 0
+        if ($curr == 1 && $prev == 0 && $next == 0) {
+            $smoothed[] = 0;
+        } else {
+            $smoothed[] = $curr;
         }
+    }
+
+    // Step 2: Count long periods without movement
+    $noMovementCount = 0;
+    $hasLongNoMovement = false;
+
+    for ($i = 0; $i < $len; $i++) {
+        if ($smoothed[$i] == 0) {
+            $noMovementCount++;
+            if ($noMovementCount >= $noMovementThreshold) {
+                $hasLongNoMovement = true;
+                break;
+            }
+        } else {
+            $noMovementCount = 0;
+        }
+    }
+
+    if ($hasLongNoMovement) {
+        $withoutMovement++;
+    } else {
+        $withMovement++;
+    }
+}
+
 
         $results[$date] = [
             'with_movement' => $withMovement,
