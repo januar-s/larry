@@ -142,7 +142,7 @@ Eine besondere Herausforderung stellte das Berechnen eines sinnvollen Ratios zur
 Trotz der Herausforderungen war der Lerneffekt sehr groß. Die Implementierung von Push-Benachrichtigungen stellte sich als einfacher heraus als gedacht. Auch die Programmierung mit C++ bzw. der Arduino-Sprache war neu für uns und ermöglichte wertvolle Einblicke in die direkte Anwendung von Microcontroller-Boards im realen Kontext – insbesondere der physische, realitäts Aspekt war spannend. Darüber hinaus haben wir den Umgang mit Chart.js gelernt und konnten damit Daten visuell aufbereiten und als Graphen in der Webapp darstellen.
 
 **Known Bugs**
-Aktuell gibt es noch einige bekannte Fehler. Der Bewegungssensor löst manchmal aus, obwohl keine Bewegung stattgefunden hat – vermutlich ist er zu empfindlich eingestellt. Zudem werden Push-Benachrichtigungen nicht immer zuverlässig ausgelöst, obwohl die Bedingungen dafür erfüllt sind.
+Aktuell gibt es noch einige bekannte Fehler. Der Bewegungssensor löst manchmal aus, obwohl keine Bewegung stattgefunden hat – vermutlich ist er zu empfindlich eingestellt. Zudem werden Push-Benachrichtigungen nicht immer zuverlässig ausgelöst, obwohl die Bedingungen dafür erfüllt sind, vor allem der "Erfolgreich Reagiert".
 
 **Aufgabenverteilung, Planung**
 Unsere Arbeitsweise war stark auf Tagesziele ausgerichtet. Morgens und mittags wurden konkrete Ziele für den restlichen Tag festgelegt, die wir möglichst erreichen wollten. Der Projektstart umfasste die Arbeit mit dem Arduino-Code sowie das physische Stecken des Boards und das Hochladen des Codes. Die Backend-Umsetzung übernahm Jan, während sich Anna-Maria auf das Frontend konzentrierte.
