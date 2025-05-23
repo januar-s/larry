@@ -4,16 +4,18 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("php/unload_light.php")
     .then((response) => response.json())
     .then((data) => {
+      const summary = data.summary;
+
       const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
       const weekdayMap = {
         "Mo": 0, "Di": 0, "Mi": 0, "Do": 0, "Fr": 0, "Sa": 0, "So": 0
       };
       const withoutMovementMap = { ...weekdayMap };
 
-      for (const date in data) {
+      for (const date in summary) {
         const weekday = dayNames[new Date(date).getDay()];
-        weekdayMap[weekday] += data[date].with_movement;
-        withoutMovementMap[weekday] += data[date].without_movement;
+        weekdayMap[weekday] += summary[date].with_movement;
+        withoutMovementMap[weekday] += summary[date].without_movement;
       }
 
       const weekOrder = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
@@ -26,13 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
           labels: weekOrder,
           datasets: [
             {
-              label: "Licht > 15min an",
+              label: "Licht an",
               data: withMovement,
               backgroundColor: "#FFCE79",
               borderWidth: 1
             },
             {
-              label: "Licht > 10min ohne Bewegung",
+              label: "Licht an ohne Bewegung",
               data: withoutMovement,
               backgroundColor: "#FFFF99",
               borderWidth: 1

@@ -67,8 +67,7 @@
       <div class="dropdown">
         <div class="dropdown-content" id="lichtdropdown">
           <h2>Heute:</h2>
-          <p id="LightUnnecessary">.. Mal unnötig angelassen</p>
-          <p id="React">.. Mal auf Larry reagiert</p>
+          <p id="React">Heute .. Mal auf Larry reagiert</p>
           <p id="Notifications">..x Benachrichtigungen in den letzten 7 Tagen</p>
         </div>
         <div class="plus toggle-icon" id="lichtplus">
@@ -155,7 +154,34 @@
           .catch((error) => {
             console.error("Fehler beim Laden der Daten:", error);
           });
+
+
+        const today = new Date().toISOString().split('T')[0];
+
+        const successes = JSON.parse(localStorage.getItem("larrySuccesses") || "{}");
+        const notifications = JSON.parse(localStorage.getItem("larryNotifications") || "{}");
+
+        // Count successful reactions today
+        const todaySuccess = successes[today] || 0;
+
+        // Count notifications from the last 7 days
+        const now = new Date();
+        let notifCount = 0;
+
+        Object.keys(notifications).forEach(dateStr => {
+          const date = new Date(dateStr);
+          const daysAgo = (now - date) / (1000 * 60 * 60 * 24);
+          if (daysAgo <= 7) {
+            notifCount += notifications[dateStr];
+          }
+        });
+
+        // Update HTML
+        document.getElementById("React").textContent = `Heute ${todaySuccess} Mal auf Larry reagiert`;
+        document.getElementById("Notifications").textContent = `${notifCount} Benachrichtigungen in den letzten 7 Tagen`;
       });
+
+
     </script>
 
 

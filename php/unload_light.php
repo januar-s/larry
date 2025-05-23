@@ -13,6 +13,12 @@ try {
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Fetch the last 20 entries (regardless of light level)
+    $sqlRecent = "SELECT * FROM lichtbewegung ORDER BY timestamp DESC LIMIT 20";
+    $stmtRecent = $pdo->prepare($sqlRecent);
+    $stmtRecent->execute();
+    $recentEntries = array_reverse($stmtRecent->fetchAll(PDO::FETCH_ASSOC)); // reverse for chronological order
+
     // Group entries by date
     $grouped = [];
     foreach ($data as $entry) {
@@ -42,7 +48,6 @@ try {
             }
         }
 
-        // Final check for the last sequence
         if (count($currentSequence) >= $minSequenceLength) {
             $sequences[] = $currentSequence;
         }
@@ -50,47 +55,43 @@ try {
         $withMovement = 0;
         $withoutMovement = 0;
 
-foreach ($sequences as $sequence) {
-    $len = count($sequence);
-    $smoothed = [];
+        foreach ($sequences as $sequence) {
+            $len = count($sequence);
+            $smoothed = [];
 
-    // Step 1: Smooth the movement data to ignore isolated spikes
-    for ($i = 0; $i < $len; $i++) {
-        $prev = $i > 0 ? $sequence[$i - 1]['bewegung'] : 0;
-        $curr = $sequence[$i]['bewegung'];
-        $next = $i < $len - 1 ? $sequence[$i + 1]['bewegung'] : 0;
+            for ($i = 0; $i < $len; $i++) {
+                $prev = $i > 0 ? $sequence[$i - 1]['bewegung'] : 0;
+                $curr = $sequence[$i]['bewegung'];
+                $next = $i < $len - 1 ? $sequence[$i + 1]['bewegung'] : 0;
 
-        // If current is 1 but surrounded by 0s, treat it as 0
-        if ($curr == 1 && $prev == 0 && $next == 0) {
-            $smoothed[] = 0;
-        } else {
-            $smoothed[] = $curr;
-        }
-    }
-
-    // Step 2: Count long periods without movement
-    $noMovementCount = 0;
-    $hasLongNoMovement = false;
-
-    for ($i = 0; $i < $len; $i++) {
-        if ($smoothed[$i] == 0) {
-            $noMovementCount++;
-            if ($noMovementCount >= $noMovementThreshold) {
-                $hasLongNoMovement = true;
-                break;
+                if ($curr == 1 && $prev == 0 && $next == 0) {
+                    $smoothed[] = 0;
+                } else {
+                    $smoothed[] = $curr;
+                }
             }
-        } else {
+
             $noMovementCount = 0;
+            $hasLongNoMovement = false;
+
+            for ($i = 0; $i < $len; $i++) {
+                if ($smoothed[$i] == 0) {
+                    $noMovementCount++;
+                    if ($noMovementCount >= $noMovementThreshold) {
+                        $hasLongNoMovement = true;
+                        break;
+                    }
+                } else {
+                    $noMovementCount = 0;
+                }
+            }
+
+            if ($hasLongNoMovement) {
+                $withoutMovement++;
+            } else {
+                $withMovement++;
+            }
         }
-    }
-
-    if ($hasLongNoMovement) {
-        $withoutMovement++;
-    } else {
-        $withMovement++;
-    }
-}
-
 
         $results[$date] = [
             'with_movement' => $withMovement,
@@ -99,7 +100,10 @@ foreach ($sequences as $sequence) {
     }
 
     header('Content-Type: application/json');
-    echo json_encode($results);
+    echo json_encode([
+        'summary' => $results,
+        'recent' => $recentEntries
+    ]);
 
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
