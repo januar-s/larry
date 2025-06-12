@@ -16,7 +16,7 @@ body {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 h1, h2, p {
@@ -82,7 +82,7 @@ p {
     border-radius: 25px;
     margin: 0;
     padding: 10px;
-    width: calc(100vw - 60px);
+    width: 100%;
     position: relative;
     height: auto;
     flex-shrink: 0;
@@ -203,6 +203,13 @@ img {
   }
 }
 
+.graph-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
 /* Tablets (601px – 1024px) */
 @media screen and (min-width: 601px) and (max-width: 1024px) {
   h1 {
@@ -230,10 +237,20 @@ img {
 }
 
 /* Desktops (1025px and up) */
-@media screen and (min-width: 1025px) {
-  #linegraph,
-  #bargraph {
-    max-width: 400px;
-    height: 300px;
+ @media screen and (min-width: 1025px) {
+  .graph-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card {
+    flex: 1;
+    max-width: 48%;
+  }
+
+  .graph canvas {
+    width: 100% !important;
+    height: auto !important;
   }
 }
