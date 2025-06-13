@@ -14,74 +14,79 @@
 </head>
 
 <body>
-  <div id="logo">
-    <h1>Larry</h1>
-  </div>
-
-  <div id="buttons">
-    <div class="infobox" id="boxbüro">
-      <h2>Box Büro</h2>
+  <div id="content">
+    <div id="logo">
+      <h1>Larry</h1>
     </div>
 
-    <div class="infobox" id="addbox">
-      <h2>add Box</h2>
-    </div>
-  </div>
-
-  <div id="luft" class="card">
-    <h1>Luft</h1>
-    <div class="box" id="luftbox">
-      <div class="graph" id="luftgraph">
-        <div style="width: 400px;"><canvas id="linegraph"></canvas></div>
-
-      </div>
-      <div class="dropdown">
-        <div class="dropdown-content" id="luftdropdown">
-          <h2>Aktuell:</h2>
-          <p id="AirQualityText">AirQuality:</p>
-          <p id="TemperatureText">Temperature:</p>
-          <p id="HumidityText">Humidity:</p>
-        </div>
-        <div class="plus toggle-icon" id="luftplus">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
-            <path class="horizontal" d="M3 15H26" stroke="black" stroke-width="5" stroke-linecap="round" />
-            <path class="vertical" d="M15 26L15 3" stroke="black" stroke-width="5" stroke-linecap="round" />
-          </svg>
-        </div>
-
-
-
+    <div id="buttons">
+      <div class="infobox" id="boxbüro">
+        <h2>Box Büro</h2>
       </div>
 
-    </div>
-  </div>
-
-
-  <div id="licht" class="card">
-    <h1>Licht</h1>
-    <div class="box" id="lichtbox">
-      <div class="graph" id="lichtgraph">
-        <div style="width: 400px;"><canvas id="bargraph"></canvas></div>
-
-      </div>
-      <div class="dropdown">
-        <div class="dropdown-content" id="lichtdropdown">
-          <h2>Heute:</h2>
-          <p id="React">Heute .. Mal auf Larry reagiert</p>
-          <p id="Notifications">..x Benachrichtigungen in den letzten 7 Tagen</p>
-        </div>
-        <div class="plus toggle-icon" id="lichtplus">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
-            <path class="horizontal" d="M3 15H26" stroke="black" stroke-width="5" stroke-linecap="round" />
-            <path class="vertical" d="M15 26L15 3" stroke="black" stroke-width="5" stroke-linecap="round" />
-          </svg>
-        </div>
-
-
-
+      <div class="infobox" id="addbox">
+        <h2>add Box</h2>
       </div>
     </div>
 
+    <div id="data">
+      <div id="luft" class="card">
+        <h1>Luft</h1>
+        <div class="box" id="luftbox">
+          <div class="graph" id="luftgraph">
+            <div><canvas id="linegraph"></canvas></div>
+
+          </div>
+          <div class="dropdown">
+            <div class="dropdown-content" id="luftdropdown">
+              <h2>Aktuell:</h2>
+              <p id="AirQualityText">AirQuality:</p>
+              <p id="TemperatureText">Temperature:</p>
+              <p id="HumidityText">Humidity:</p>
+            </div>
+            <div class="plus toggle-icon" id="luftplus">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29"
+                fill="none">
+                <path class="horizontal" d="M3 15H26" stroke="black" stroke-width="5" stroke-linecap="round" />
+                <path class="vertical" d="M15 26L15 3" stroke="black" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="licht" class="card">
+        <h1>Licht</h1>
+        <div class="box" id="lichtbox">
+          <div class="graph" id="lichtgraph">
+            <div><canvas id="bargraph"></canvas></div>
+
+          </div>
+          <div class="dropdown">
+            <div class="dropdown-content" id="lichtdropdown">
+              <h2>Heute:</h2>
+              <p id="React">Heute .. Mal auf Larry reagiert</p>
+              <p id="Notifications">..x Benachrichtigungen in den letzten 7 Tagen</p>
+            </div>
+            <div class="plus toggle-icon" id="lichtplus">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29"
+                fill="none">
+                <path class="horizontal" d="M3 15H26" stroke="black" stroke-width="5" stroke-linecap="round" />
+                <path class="vertical" d="M15 26L15 3" stroke="black" stroke-width="5" stroke-linecap="round" />
+              </svg>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer>
 
